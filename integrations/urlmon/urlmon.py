@@ -2,16 +2,23 @@
 import platform
 import sys
 import time
-import urllib2
+try:
+        import urllib2
+except ImportError:
+        import urllib
 import json
 import threading
-import Queue
+try:
+        import queue
+except ImportError:
+        import Queue as queue
 import re
 import logging
-
 from alertaclient.api import Client
-
-from BaseHTTPServer import BaseHTTPRequestHandler as BHRH
+try:
+        from BaseHTTPServer import BaseHTTPRequestHandler as BHRH
+except ImportError:
+        from http.server import BaseHTTPRequestHandler as BHRH
 
 HTTP_RESPONSES = dict([(k, v[0]) for k, v in BHRH.responses.items()])
 
