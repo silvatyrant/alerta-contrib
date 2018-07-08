@@ -329,7 +329,7 @@ class UrlmonDaemon(object):
 
         self.running = True
 
-        self.queue = Queue.Queue()
+        self.queue = queue.Queue()
         self.api = Client(endpoint=settings.ENDPOINT, key=settings.API_KEY)
 
         # Start worker threads
