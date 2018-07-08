@@ -267,34 +267,34 @@ class WorkerThread(threading.Thread):
             start = time.time()
 
             if username and password:
-                auth_handler = urllib2.HTTPBasicAuthHandler()
+                auth_handler = urllib.HTTPBasicAuthHandler()
                 auth_handler.add_password(realm=realm,
                                           uri=uri,
                                           user=username,
                                           passwd=password)
                 if proxy:
-                    opener = urllib2.build_opener(auth_handler, urllib2.ProxyHandler(proxy))
+                    opener = urllib.build_opener(auth_handler, urllib.ProxyHandler(proxy))
                 else:
-                    opener = urllib2.build_opener(auth_handler)
+                    opener = urllib.build_opener(auth_handler)
             else:
                 if proxy:
-                    opener = urllib2.build_opener(urllib2.ProxyHandler(proxy))
+                    opener = urllib.build_opener(urllib.ProxyHandler(proxy))
                 else:
-                    opener = urllib2.build_opener()
-            urllib2.install_opener(opener)
+                    opener = urllib.build_opener()
+            urllib.install_opener(opener)
 
             if 'User-agent' not in headers:
-                headers['User-agent'] = 'alert-urlmon/%s Python-urllib/%s' % (__version__, urllib2.__version__)
+                headers['User-agent'] = 'alert-urlmon/%s Python-urllib/%s' % (__version__, urllib.__version__)
 
             try:
                 if post:
-                    req = urllib2.Request(url, json.dumps(post), headers=headers)
+                    req = urllib.Request(url, json.dumps(post), headers=headers)
                 else:
-                    req = urllib2.Request(url, headers=headers)
-                response = urllib2.urlopen(req, None, MAX_TIMEOUT)
+                    req = urllib.Request(url, headers=headers)
+                response = urllib.urlopen(req, None, MAX_TIMEOUT)
             except ValueError as e:
                 LOG.error('Request failed: %s', e)
-            except urllib2.URLError as e:
+            except urllib.URLError as e:
                 if hasattr(e, 'reason'):
                     reason = str(e.reason)
                     status = None
